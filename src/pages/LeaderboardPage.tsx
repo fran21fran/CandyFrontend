@@ -5,6 +5,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Medal, Award, Star, Timer, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+
 
 interface GameLeaderboardEntry {
   id: string;
@@ -93,7 +95,7 @@ export default function LeaderboardPage() {
     queryKey: ["/api/user-scores"],
   });*/
   const [activeTab, setActiveTab] = useState("global");
-  const { data: userScores, isLoading: userScoresLoading, refetch: refetchUserScores } = useQuery({
+  const { data: userScores, isLoading: userScoresLoading, refetch: refetchUserScores } = useQuery<GameLeaderboardEntry[]>({
     queryKey: ["/api/user-scores"],
     enabled: false, // para evitar el fetch automático
   });
