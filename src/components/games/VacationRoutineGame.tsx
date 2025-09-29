@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { gameData } from "@/data/games";
-
+import GameScoreTracker from "@/components/GameScoreTracker";
 interface VacationRoutineGameProps {
   language: string;
   onComplete: (success: boolean) => void;
@@ -11,51 +11,64 @@ export default function VacationRoutineGame({ language, onComplete }: VacationRo
   const [currentTask, setCurrentTask] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showThankYou, setShowThankYou] = useState(false);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  useEffect(() => {
+    setStartTime(Date.now());
+  }, []);
+  const activeGame = gameData.vacation[language as keyof typeof gameData.vacation] ?? fallbackGame;
+  const fallbackGame = {
+    routine: "Hello! Help me finish my vacation routine!",
+    tasks: [
+      { text: "I _____ at 9am", options: ["wake up", "sleep", "eat"], correct: 0 },
+      { text: "I brush my _____", options: ["hair", "teeth", "hands"], correct: 1 },
+      { text: "I _____ breakfast", options: ["dinner", "lunch", "have"], correct: 2 },
+    ],
+    thanks: "Thank you so much! Now I can enjoy my vacation!",
+  };
 
-  const gameInfo = gameData.vacation[language as keyof typeof gameData.vacation];
+
   
-  if (!gameInfo) {
-    // Datos por defecto si el idioma no está configurado
-    const defaultGame = {
-      routine: "Hello! Help me finish my vacation routine!",
-      tasks: [
-        { text: "I _____ at 9am", options: ["wake up", "sleep", "eat"], correct: 0 },
-        { text: "I brush my _____", options: ["hair", "teeth", "hands"], correct: 1 },
-        { text: "I _____ breakfast", options: ["dinner", "lunch", "have"], correct: 2 }
-      ],
-      thanks: "Thank you so much! Now I can enjoy my vacation!"
-    };
-    
-    const handleAnswer = (answerIndex: number) => {
+
+  const handleAnswer = (answerIndex: number) => {
       const newAnswers = [...selectedAnswers, answerIndex];
       setSelectedAnswers(newAnswers);
 
-      if (currentTask < defaultGame.tasks.length - 1) {
+      if (currentTask < activeGame.tasks.length - 1) {
         setTimeout(() => setCurrentTask(currentTask + 1), 1000);
       } else {
         setTimeout(() => {
           setShowThankYou(true);
-          const allCorrect = newAnswers.every((answer, index) => answer === defaultGame.tasks[index].correct);
+          const allCorrect = newAnswers.every((answer, index) => answer === activeGame.tasks[index].correct);
+          const completionTime = Math.round((Date.now() - (startTime || 0)) / 1000);
+          const score = allCorrect ? 100 : 0;
+          window.triggerGameEnd?.(score, completionTime);
           setTimeout(() => onComplete(allCorrect), 2000);
         }, 1000);
       }
     };
-
+  
     return (
+      <GameScoreTracker
+        gameId="vacation-routine"
+        gameName="Rutina de Vacaciones"
+        difficulty="Intermedio"
+        language="es"
+        isGameActive={true}
+      />
       <div className="min-h-screen bg-gradient-to-b from-blue-300 to-blue-500 flex items-center justify-center p-6">
         <div className="bg-white rounded-2xl p-8 max-w-2xl w-full text-center shadow-2xl">
           {!showThankYou ? (
             <>
               <div className="text-6xl mb-4">👦</div>
-              <h2 className="text-2xl font-bold mb-4 text-blue-800">{defaultGame.routine}</h2>
+              <h2 className="text-2xl font-bold mb-4 text-blue-800">{activeGame.routine}</h2>
               
               <div className="bg-gray-100 rounded-lg p-6 mb-6">
                 <div className="text-lg mb-4 text-gray-800">
-                  {defaultGame.tasks[currentTask].text}
+                  {activeGame.tasks[currentTask].text}
                 </div>
                 
                 <div className="grid grid-cols-1 gap-3">
-                  {defaultGame.tasks[currentTask].options.map((option, index) => (
+                  {activeGame.tasks[currentTask].options.map((option, index) => (
                     <Button
                       key={index}
                       onClick={() => handleAnswer(index)}
@@ -68,22 +81,28 @@ export default function VacationRoutineGame({ language, onComplete }: VacationRo
               </div>
               
               <div className="text-sm text-gray-600">
-                Tarea {currentTask + 1} de {defaultGame.tasks.length}
+                Tarea {currentTask + 1} de {activeGame.tasks.length}
               </div>
             </>
           ) : (
             <div className="text-center">
               <div className="text-6xl mb-4">😊</div>
-              <h2 className="text-2xl font-bold mb-4 text-green-600">{defaultGame.thanks}</h2>
+              <h3 className="text-xl text-gray-700">
+                Tu puntaje: {selectedAnswers.every((a, i) => a === activeGame.tasks[i].correct) ? "100" : "0"}
+              </h3>
+              <h2 className="text-2xl font-bold mb-4 text-green-600">{activeGame.thanks}</h2>
               <div className="text-4xl">🎉</div>
             </div>
           )}
         </div>
       </div>
     );
-  }
 
-  const handleAnswer = (answerIndex: number) => {
+
+  
+  
+
+  /*const handleAnswer = (answerIndex: number) => {
     const newAnswers = [...selectedAnswers, answerIndex];
     setSelectedAnswers(newAnswers);
 
@@ -138,4 +157,4 @@ export default function VacationRoutineGame({ language, onComplete }: VacationRo
       </div>
     </div>
   );
-}
+}*/
