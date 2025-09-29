@@ -92,7 +92,16 @@ export default function LeaderboardPage() {
   const { data: userScores, isLoading: userScoresLoading } = useQuery<GameLeaderboardEntry[]>({
     queryKey: ["/api/user-scores"],
   });
-
+  const [activeTab, setActiveTab] = useState("global");
+  const { data: userScores, isLoading: userScoresLoading, refetch: refetchUserScores } = useQuery({
+    queryKey: ["/api/user-scores"],
+    enabled: false, // para evitar el fetch automático
+  });
+  useEffect(() => {
+    if (activeTab === "personal") {
+      refetchUserScores();
+    }
+  }, [activeTab]);
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-purple-900 text-white p-6">
       {/* Animated background orbs */}
@@ -140,7 +149,8 @@ export default function LeaderboardPage() {
           </Card>
         )}
 
-        <Tabs defaultValue="global" className="space-y-6">
+        {/*<Tabs defaultValue="global" className="space-y-6">*/}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-3 bg-white/10 border-white/20">
             <TabsTrigger value="global" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
               Ranking Global
