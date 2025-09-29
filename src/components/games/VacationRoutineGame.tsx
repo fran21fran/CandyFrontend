@@ -15,7 +15,7 @@ export default function VacationRoutineGame({ language, onComplete }: VacationRo
   useEffect(() => {
     setStartTime(Date.now());
   }, []);
-  const activeGame = gameData.vacation[language as keyof typeof gameData.vacation] ?? fallbackGame;
+  
   const fallbackGame = {
     routine: "Hello! Help me finish my vacation routine!",
     tasks: [
@@ -26,7 +26,7 @@ export default function VacationRoutineGame({ language, onComplete }: VacationRo
     thanks: "Thank you so much! Now I can enjoy my vacation!",
   };
 
-
+  const activeGame = gameData.vacation[language as keyof typeof gameData.vacation] ?? fallbackGame;
   
 
   const handleAnswer = (answerIndex: number) => {
