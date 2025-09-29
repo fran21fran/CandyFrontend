@@ -29,6 +29,7 @@ export default function Navigation() {
       return apiRequest("POST", "/api/logout");
     },
     onSuccess: () => {
+      queryClient.clear();
       queryClient.invalidateQueries({ queryKey: ["/api/user-info"] });
       toast({
         title: "Sesión cerrada",
