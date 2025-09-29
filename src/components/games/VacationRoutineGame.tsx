@@ -98,7 +98,7 @@ export default function VacationRoutineGame({ language, onComplete }: VacationRo
       </div>
     );
 
-
+}
   
   
 
