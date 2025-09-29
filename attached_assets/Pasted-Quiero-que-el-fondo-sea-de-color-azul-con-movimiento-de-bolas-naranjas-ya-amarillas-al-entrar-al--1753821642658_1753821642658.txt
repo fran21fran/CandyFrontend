@@ -1,0 +1,14 @@
+Quiero que  el fondo sea de color azul con movimiento de bolas naranjas ya amarillas, al entrar  al perfil de jugar haya 10 juegos del idioma correspondiente, 
+1_ un juego tipo futbol donde hay un arco y tres pelotas donde cada una tiene una palabra o verbo conjugado, solo una pelota tiene la opción correcta de una frase que va a estar en el idioma correspondiente.
+El jugador tiene q lazar la pelota (con un movimiento en la pantalla lanza la pelota al arco) y averiguar (atreves de confetis que salen del arco) si su opción era la correcta.
+2_ el jugador debe lograr que un niño de 8 años termine de escribir su rutina de vacaciones en la computadora (completando con opciones que se van a encontrar al costado del mensaje ) al hacerlo bien el niño saludara y agradecerá en el idioma correspondiente un
+3_ El jugador deberá asociar imágenes con las palabras correspondiente (animales, colores, tipos de telas, partes del cuerpo, etc)
+Al hacerlo bien se van eliminando hasta ganar en el menor tiempo posible 
+4_ el jugador vera en la pantalla un snoopy que pide ayuda para ir por el camino correcto, donde los obstáculos sean escribir el nombre de los números resultados de una suma, resta o multiplicación.
+5_ el jugador vera una chica que le gusta la moda y te pide que la acompañes a comprarse ropa y para hablar con ella y aconsejarla para que se elija el mejor conjunto, deberá saber sobre el nombre de telas, ropas y colores básicos del idioma correspondiente 
+6_ para ayudar a hacer las compras a la señora “Maria” deberá saber sobre el nombre de las tiendas, los productos básicos para la semana y los números para pagar la cuenta.
+7_ el jugador para salvar a Spiderman deberá desviar el tren al camino con la dirección en idioma correcto, eligiendo la opción correcta pero las palabras tendrán pequeñas trampas (como pequeñas faltas de ortografía) si no lo logra en 5 intentos perderá
+8_busca el tesoro siguiendo las indicaciones de dirección que van a aparecer en el mapa (que esta desde un principio) a medida que vayas llegando al lugar te aparece otra pista del siguiente lugar.
+El tesoro es un diploma de conocimiento y monedas de caritas felices.
+9_el jugador tendrá que resolver una sopa de letras con un max de 10 palabras ocultas, donde van a ser de regiones o cosas culturales de cada idioma, en solo 7minutos
+10_ el jugador deberá cuidar una planta (una margarita ) de su vecina, quien le dejo una nota de como cuidarla en cada estación, clima y otra nota de su hora de riego ( en hora coloquial en el idioma correspondiente)a la cual debe cuidar a través de opciones que van a variar dependiendo del clima , para esto el jugador debera tener conocimiento de las estaciones, los climas y la hora en el idioma seleccionado 
