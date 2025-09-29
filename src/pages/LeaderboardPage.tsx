@@ -89,9 +89,9 @@ export default function LeaderboardPage() {
     queryKey: ["/api/user-ranking"],
   });
 
-  const { data: userScores, isLoading: userScoresLoading } = useQuery<GameLeaderboardEntry[]>({
+  /*const { data: userScores, isLoading: userScoresLoading } = useQuery<GameLeaderboardEntry[]>({
     queryKey: ["/api/user-scores"],
-  });
+  });*/
   const [activeTab, setActiveTab] = useState("global");
   const { data: userScores, isLoading: userScoresLoading, refetch: refetchUserScores } = useQuery({
     queryKey: ["/api/user-scores"],
