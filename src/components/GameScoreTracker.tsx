@@ -6,7 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Star, Timer, Share } from "lucide-react";
-
+declare global {
+  interface Window {
+    triggerGameEnd?: (score: number, time: number) => void;
+    updateGameScore?: (points: number) => void;
+  }
+}
 interface GameScoreTrackerProps {
   gameId: string;
   gameName: string;
