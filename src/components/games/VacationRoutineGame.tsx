@@ -48,6 +48,7 @@ export default function VacationRoutineGame({ language, onComplete }: VacationRo
     };
   
     return (
+    <>
       <GameScoreTracker
         gameId="vacation-routine"
         gameName="Rutina de Vacaciones"
@@ -96,6 +97,7 @@ export default function VacationRoutineGame({ language, onComplete }: VacationRo
           )}
         </div>
       </div>
+    </>
     );
 
 }
