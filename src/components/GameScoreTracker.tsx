@@ -146,7 +146,22 @@ export default function GameScoreTracker({
       });
     }
   };
-
+ // Score update function for games to use
+  window.updateGameScore = (points: number) => {
+    setCurrentScore(prev => prev + points);
+  };
+  window.triggerGameEnd = (score: number, time: number) => {
+    saveScoreMutation.mutate({
+      gameId,
+      score,
+      completionTime: time,
+      difficulty,
+      language,
+    });
+    setFinalScore(score);
+    setFinalTime(time);
+    setShowResults(true);
+  };
   return (
     <div className="space-y-4">
       {/* Game Info Header */}
@@ -233,20 +248,5 @@ export default function GameScoreTracker({
     </div>
   );
 
-  // Score update function for games to use
-  window.updateGameScore = (points: number) => {
-    setCurrentScore(prev => prev + points);
-  };
-  window.triggerGameEnd = (score: number, time: number) => {
-    saveScoreMutation.mutate({
-      gameId,
-      score,
-      completionTime: time,
-      difficulty,
-      language,
-    });
-    setFinalScore(score);
-    setFinalTime(time);
-    setShowResults(true);
-  };
+ 
 }
