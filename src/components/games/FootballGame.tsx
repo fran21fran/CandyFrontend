@@ -90,7 +90,11 @@ export default function FootballGame({ language, onComplete }: FootballGameProps
           // Juego completado exitosamente
           setGameEnded(true);
           setIsGameActive(false);
+          if (window.triggerGameEnd) {
+            window.triggerGameEnd(score, 120 - timeLeft);
+          }
           onComplete(true);
+          
         }
       }, 2000);
     } else {
@@ -100,6 +104,9 @@ export default function FootballGame({ language, onComplete }: FootballGameProps
           setTimeout(() => {
             setGameEnded(true);
             setIsGameActive(false);
+            if (window.triggerGameEnd) {
+              window.triggerGameEnd(score, 120 - timeLeft);
+            }
             onComplete(false);
           }, 2000);
         } else {
