@@ -233,15 +233,15 @@ export default function GameScoreTracker({
     setCurrentScore(prev => prev + points);
   };
   window.triggerGameEnd = (score: number, time: number) => {
-  saveScoreMutation.mutate({
-    gameId,
-    score,
-    completionTime: time,
-    difficulty,
-    language,
-  });
-  setFinalScore(score);
-  setFinalTime(time);
-  setShowResults(true);
-};
+    saveScoreMutation.mutate({
+      gameId,
+      score,
+      completionTime: time,
+      difficulty,
+      language,
+    });
+    setFinalScore(score);
+    setFinalTime(time);
+    setShowResults(true);
+  };
 }
