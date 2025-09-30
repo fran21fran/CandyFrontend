@@ -38,6 +38,7 @@ export default function ImageAssociationGame({ language, onComplete }: ImageAsso
     if (matchedCount === items.length) {
       const completionTime = Math.round((Date.now() - (startTime || 0)) / 1000);
       const score = 100;
+      console.log("triggerGameEnd", score, completionTime);
       window.triggerGameEnd?.(score, completionTime);
       setFinalTime(completionTime);
       onComplete(true);
