@@ -50,7 +50,7 @@ export default function GameScoreTracker({
       console.log("🎮 INTENTANDO GUARDAR PUNTAJE:", scoreData);
       return apiRequest("POST", "/api/game-scores", scoreData);
     },
-    onSuccess: () => {
+    onSuccess: (_data, variables) => {
       console.log("✅ PUNTAJE GUARDADO EXITOSAMENTE!");
       queryClient.invalidateQueries({ queryKey: ["/api/user-scores"] });
       queryClient.invalidateQueries({ queryKey: ["/api/leaderboard/global"] });
@@ -59,7 +59,7 @@ export default function GameScoreTracker({
       
       toast({
         title: "¡Puntuación guardada!",
-        description: `Has obtenido ${finalScore} puntos en ${finalTime} segundos`,
+        description: `Has obtenido ${variables.score} puntos en ${variables.completionTime} segundos`,
       });
     },
     onError: (error) => {
