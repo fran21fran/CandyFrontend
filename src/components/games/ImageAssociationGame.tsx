@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { gameData } from "@/data/games";
+import GameScoreTracker from "@/components/GameScoreTracker";
 
 interface ImageAssociationGameProps {
   language: string;
@@ -8,24 +9,41 @@ interface ImageAssociationGameProps {
 }
 
 export default function ImageAssociationGame({ language, onComplete }: ImageAssociationGameProps) {
+  const [startTime, setStartTime] = useState<number | null>(null);
   const [matches, setMatches] = useState<{[key: string]: boolean}>({});
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [timeLeft, setTimeLeft] = useState(60);
   const [gameStarted, setGameStarted] = useState(false);
 
-  const gameInfo = gameData.association[language as keyof typeof gameData.association];
+  const fallbackGame = {
+  items: [
+      { word: "Cat", image: "🐱", category: "animal" },
+      { word: "Red", image: "🔴", category: "color" },
+      { word: "Cotton", image: "🧵", category: "fabric" },
+      { word: "Hand", image: "✋", category: "body" },
+    ],
+  };
+
+  const activeGame = gameData.association[language as keyof typeof gameData.association] ?? fallbackGame;
+
+  const items = activeGame.items
+  useEffect(() => {
+    if (gameStarted) setStartTime(Date.now());
+  }, [gameStarted]);
+
+  useEffect(() => {
+    const matchedCount = Object.values(matches).filter(Boolean).length;
+    if (matchedCount === items.length) {
+      const completionTime = Math.round((Date.now() - (startTime || 0)) / 1000);
+      const score = 100;
+      window.triggerGameEnd?.(score, completionTime);
+      setFinalTime(completionTime);
+      onComplete(true);
+    }
+  }, [matches, items.length, onComplete, startTime]);
+
   
-  // Datos por defecto si el idioma no está configurado
-  const defaultItems = [
-    { word: "Cat", image: "🐱", category: "animal" },
-    { word: "Red", image: "🔴", category: "color" },
-    { word: "Cotton", image: "🧵", category: "fabric" },
-    { word: "Hand", image: "✋", category: "body" }
-  ];
-
-  const items = gameInfo ? gameInfo.items : defaultItems;
-
   useEffect(() => {
     if (gameStarted && timeLeft > 0) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
@@ -35,12 +53,12 @@ export default function ImageAssociationGame({ language, onComplete }: ImageAsso
     }
   }, [gameStarted, timeLeft, onComplete]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const matchedCount = Object.values(matches).filter(Boolean).length;
     if (matchedCount === items.length) {
       onComplete(true);
     }
-  }, [matches, items.length, onComplete]);
+  }, [matches, items.length, onComplete]);*/
 
   const handleWordClick = (word: string) => {
     if (matches[word]) return;
@@ -87,6 +105,14 @@ export default function ImageAssociationGame({ language, onComplete }: ImageAsso
   }
 
   return (
+  <>
+    <GameScoreTracker
+      gameId="image-association"
+      gameName="Asociación de Imágenes"
+      difficulty="Intermedio"
+      language={language}
+      isGameActive={gameStarted}
+    />
     <div className="min-h-screen bg-gradient-to-b from-purple-400 to-pink-500 p-6">
       <div className="max-w-4xl mx-auto">
         {/* Timer */}
@@ -148,9 +174,16 @@ export default function ImageAssociationGame({ language, onComplete }: ImageAsso
             <div className="text-lg font-semibold">
               Progreso: {Object.values(matches).filter(Boolean).length} / {items.length}
             </div>
+            {finalTime !== null && (
+              <div className="mt-6 text-center">
+                <h3 className="text-xl text-gray-700">Tu puntaje: 100</h3>
+                <h4 className="text-md text-gray-600">Tiempo: {finalTime} segundos</h4>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
+  </>
   );
 }
