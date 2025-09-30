@@ -10,6 +10,7 @@ interface ImageAssociationGameProps {
 
 export default function ImageAssociationGame({ language, onComplete }: ImageAssociationGameProps) {
   const [startTime, setStartTime] = useState<number | null>(null);
+  const [finalTime, setFinalTime] = useState<number | null>(null);
   const [matches, setMatches] = useState<{[key: string]: boolean}>({});
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
