@@ -191,11 +191,11 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
               <h2 className="text-2xl font-bold mb-4 text-pink-600">{currentData.thanks}</h2>
               <p className="text-lg">Puntuación final: {score}/{currentData.scenes.length}</p>
             </div>
-            {finalTime !== null && (
-              <p className="text-sm text-gray-600">Tiempo final: {finalTime} segundos</p>
-            )}
           )}
         </div>
+        {finalTime !== null && (
+          <p className="text-sm text-gray-600">Tiempo final: {finalTime} segundos</p>
+        )}
       </div>
     </div>
   </> 
