@@ -127,7 +127,7 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
 
   return (
   <>
-    <div style={{ display: "contents" }}>
+    <div style={{ display: "none" }}>
       <GameScoreTracker
         gameId="fashion-shopping"
         gameName="Fashion Shopping"
