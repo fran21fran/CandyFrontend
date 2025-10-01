@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import confetti from "canvas-confetti";
-import GameScoreStracker from "@/components/GameScoreTracker";
+import GameScoreTracker from "@/components/GameScoreTracker";
 // Usamos una imagen SVG de Snoopy directamente en línea
 const snoopyImageSvg = `data:image/svg+xml;base64,${btoa(`
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
