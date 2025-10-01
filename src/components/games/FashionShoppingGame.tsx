@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,userEffect } from "react";
 import { Button } from "@/components/ui/button";
 import GameScoreTracker from "@/components/GameScoreTracker";
 
@@ -12,7 +12,9 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
-  const [finalTime, setFinalTime] = useState<number | null>(null);
+  //const [finalTime, setFinalTime] = useState<number | null>(null);
+  const totalQuestions = currentData.scenes.length;
+
   useEffect(() => {
     setStartTime(Date.now());
   }, []);
