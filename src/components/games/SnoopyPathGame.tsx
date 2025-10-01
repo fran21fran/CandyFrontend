@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import confetti from "canvas-confetti";
+import GameScoreStracker from "@/components/GameScoreTracker";
 // Usamos una imagen SVG de Snoopy directamente en línea
 const snoopyImageSvg = `data:image/svg+xml;base64,${btoa(`
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
@@ -24,6 +25,9 @@ interface SnoopyPathGameProps {
 }
 
 export default function SnoopyPathGame({ language, onComplete }: SnoopyPathGameProps) {
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [finalTime, setFinalTime] = useState<number | null>(null);
+
   const [currentLevel, setCurrentLevel] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
   const [snoopyPosition, setSnoopyPosition] = useState(10);
@@ -83,6 +87,9 @@ export default function SnoopyPathGame({ language, onComplete }: SnoopyPathGameP
 
   const currentProblem = mathProblems[currentLevel];
   const correctAnswer = numbers[language as keyof typeof numbers]?.[currentProblem.answerNum as keyof typeof numbers.english] || currentProblem.answer;
+  useEffect(() => {
+    setStartTime(Date.now());
+  }, []);
 
   const handleSubmit = () => {
     const correct = userAnswer.toLowerCase().trim() === correctAnswer.toLowerCase();
@@ -114,6 +121,11 @@ export default function SnoopyPathGame({ language, onComplete }: SnoopyPathGameP
             spread: 100,
             origin: { y: 0.6 }
           });
+          const completionTime = Math.max(1, Math.round((Date.now() - (startTime || 0)) / 1000));
+          const score = 100;
+
+          window.triggerGameEnd?.(score, completionTime);
+          setFinalTime(completionTime);
           onComplete(true);
         }
       }, 2500);
@@ -126,6 +138,7 @@ export default function SnoopyPathGame({ language, onComplete }: SnoopyPathGameP
   };
 
   return (
+  <>
     <div className="min-h-screen bg-gradient-to-b from-blue-300 via-green-300 to-yellow-400 relative overflow-hidden">
       {/* Camino */}
       <div className="absolute bottom-20 w-full h-32 bg-gradient-to-t from-amber-700 to-amber-500 border-t-4 border-amber-800"></div>
@@ -239,8 +252,14 @@ export default function SnoopyPathGame({ language, onComplete }: SnoopyPathGameP
           <div className="text-center text-sm text-gray-600 mt-2">
             Progreso: {currentLevel + 1} / {mathProblems.length}
           </div>
+          {finalTime !== null && (
+            <div className="mt-6 text-center">
+              <h3 className="text-xl text-gray-700">Tu puntaje: 100</h3>
+            <h4 className="text-md text-gray-600">Tiempo: {finalTime} segundos</h4>
+            </div>
+          )}
         </div>
       </div>
     </div>
-  );
+  </>);
 }
