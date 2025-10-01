@@ -139,6 +139,13 @@ export default function SnoopyPathGame({ language, onComplete }: SnoopyPathGameP
 
   return (
   <>
+    <GameScoreTracker
+      gameId="snoopy-path"
+      gameName="Camino de Snoopy"
+      difficulty="Intermedio"
+      language={language}
+      isGameActive={true}
+    />
     <div className="min-h-screen bg-gradient-to-b from-blue-300 via-green-300 to-yellow-400 relative overflow-hidden">
       {/* Camino */}
       <div className="absolute bottom-20 w-full h-32 bg-gradient-to-t from-amber-700 to-amber-500 border-t-4 border-amber-800"></div>
