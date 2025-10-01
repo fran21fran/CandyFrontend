@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import GameScoreTracker from "@/components/GameScoreTracker";
 
 interface FashionShoppingGameProps {
   language: string;
@@ -10,6 +11,12 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
   const [currentScene, setCurrentScene] = useState(0);
   const [score, setScore] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [finalTime, setFinalTime] = useState<number | null>(null);
+  useEffect(() => {
+    setStartTime(Date.now());
+  }, []);
+
 
   const fashionData = {
     french: {
@@ -101,13 +108,29 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
         setCurrentScene(currentScene + 1);
         setSelectedAnswer(null);
       } else {
+        const finalScore = Math.round((score / totalQuestions) * 100);
         const success = score >= 2; // Al menos 2 de 3 correctas
+        const completionTime = Math.max(1, Math.round((Date.now() - (startTime || 0)) / 1000));
+        
+
+        window.triggerGameEnd?.(finalScore, completionTime);
+        setFinalTime(completionTime);
+
+
         onComplete(success);
       }
     }, 2000);
   };
 
   return (
+  <>
+      <GameScoreTracker
+        gameId="fashion-shopping"
+        gameName="Fashion Shopping"
+        difficulty="Intermedio"
+        language={language}
+        isGameActive={true}
+      />
     <div className="min-h-screen bg-gradient-to-b from-pink-300 to-purple-400 flex items-center justify-center p-6">
       <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Personaje */}
