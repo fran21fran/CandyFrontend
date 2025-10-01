@@ -127,6 +127,7 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
 
   return (
   <>
+    <div style={{ display: "contents" }}>
       <GameScoreTracker
         gameId="fashion-shopping"
         gameName="Fashion Shopping"
@@ -134,6 +135,7 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
         language={language}
         isGameActive={true}
       />
+    </div>
     <div className="min-h-screen bg-gradient-to-b from-pink-300 to-purple-400 flex items-center justify-center p-6">
       <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Personaje */}
