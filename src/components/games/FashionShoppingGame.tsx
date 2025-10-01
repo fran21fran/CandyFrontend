@@ -1,4 +1,4 @@
-import { useState,userEffect } from "react";
+import { useState,useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import GameScoreTracker from "@/components/GameScoreTracker";
 
@@ -13,7 +13,7 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
   //const [finalTime, setFinalTime] = useState<number | null>(null);
-  const totalQuestions = currentData.scenes.length;
+  
 
   useEffect(() => {
     setStartTime(Date.now());
@@ -110,6 +110,7 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
         setCurrentScene(currentScene + 1);
         setSelectedAnswer(null);
       } else {
+        const totalQuestions = currentData.scenes.length;
         const finalScore = Math.round((score / totalQuestions) * 100);
         const success = score >= 2; // Al menos 2 de 3 correctas
         const completionTime = Math.max(1, Math.round((Date.now() - (startTime || 0)) / 1000));
