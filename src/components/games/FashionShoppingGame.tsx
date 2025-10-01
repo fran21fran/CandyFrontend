@@ -192,5 +192,6 @@ export default function FashionShoppingGame({ language, onComplete }: FashionSho
         </div>
       </div>
     </div>
+  </> 
   );
 }
